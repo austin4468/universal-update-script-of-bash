@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# 通用更新脚本
-
 echo "===========================================
         Welcome to the Update Script        
 ============================================
@@ -14,7 +12,7 @@ echo "===========================================
        Keep your system up-to-date easily!  
 ============================================"
 
-#记录开始时间
+# record starting time
 start_time=$(date +%s)
 
 # 检查并更新APT系统
@@ -25,7 +23,7 @@ update_apt() {
     sudo apt clean
 }
 
-# 检查并更新YUM系统
+# check YUM
 update_yum() {
     echo "Updating YUM packages..."
     sudo yum update -y
@@ -33,7 +31,7 @@ update_yum() {
     sudo yum clean all
 }
 
-# 检查并更新DNF系统
+# check DNF
 update_dnf() {
     echo "Updating DNF packages..."
     sudo dnf update -y
@@ -41,14 +39,14 @@ update_dnf() {
     sudo dnf clean all
 }
 
-# 检查并更新Pacman系统
+# check Pacman
 update_pacman() {
     echo "Updating Pacman packages..."
     sudo pacman -Syu --noconfirm
     sudo pacman -Sc --noconfirm
 }
 
-# 检查并更新Flatpak
+# check Flatpak
 update_flatpak() {
     if command -v flatpak &> /dev/null; then
         echo "Updating Flatpak packages..."
@@ -56,7 +54,7 @@ update_flatpak() {
     fi
 }
 
-# 检查并更新Snap
+# check Snap
 update_snap() {
     if command -v snap &> /dev/null; then
         echo "Updating Snap packages..."
@@ -64,7 +62,7 @@ update_snap() {
     fi
 }
 
-# 检测系统包管理器
+# detect package manager
 if command -v apt &> /dev/null; then
     update_apt
 elif command -v yum &> /dev/null; then
@@ -78,17 +76,17 @@ else
     exit 1
 fi
 
-# 更新Flatpak和Snap
+# update Flatpak & Snap
 update_flatpak
 update_snap
 
-# 记录结束时间
+# record ending time
 end_time=$(date +%s)
 
-# 计算耗时
+# cauculate elapesd
 elapsed_time=$((end_time - start_time))
 
-# 格式化耗时为小时:分钟:秒
+# formate time record
 formatted_time=$(printf '%02d:%02d:%02d' $((elapsed_time / 3600)) $(((elapsed_time % 3600) / 60)) $((elapsed_time % 60)))
 
 echo "============================================"
